@@ -7,6 +7,7 @@ vim.api.nvim_command('set relativenumber')
 vim.api.nvim_command('set splitright')
 vim.api.nvim_command('set splitbelow')
 vim.api.nvim_command('set mouse=a')
+vim.api.nvim_command('set completeopt=menuone,noinsert,noselect')
 
 -- treesitter
 require('nvim-treesitter.configs').setup {
@@ -15,7 +16,6 @@ require('nvim-treesitter.configs').setup {
     enable = true,
   },
 }
-
 
 -- lspconfig
 local system_name
@@ -33,7 +33,7 @@ local sumneko_root_path = vim.fn.stdpath('cache')..'/lspconfig/sumneko_lua/lua-l
 local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
 
 require'lspconfig'.sumneko_lua.setup {
-  -- on_attach=require'completion'.on_attach,
+  on_attach=require'completion'.on_attach,
   cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
   settings = {
     Lua = {
@@ -67,11 +67,7 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'glepnir/zephyr-nvim'
   use 'neovim/nvim-lspconfig'
-  use {
-    'haorenW1025/completion-nvim',
-    opt = true,
-    requires = {{'hrsh7th/vim-vsnip', opt = true}, {'hrsh7th/vim-vsnip-integ', opt = true}}
-  }
+  use 'nvim-lua/completion-nvim'
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {
     'glepnir/galaxyline.nvim', branch = 'main', config = function() require('statusline') end,
