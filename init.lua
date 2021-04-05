@@ -137,6 +137,15 @@ vim.g.completion_chain_complete_list = {
   {complete_items = {"lsp", "snippet", "path"}},
 }
 
+-- replace curr selected txt with default register w/o yanking it
+vim.api.nvim_set_keymap('v','<leader>p','_dP', {noremap = true})
+
+-- copy text from clipboard
+vim.api.nvim_set_keymap('n','<leader>y','"+y', {noremap = true})
+vim.api.nvim_set_keymap('v','<leader>y','"+y', {noremap = true})
+vim.api.nvim_set_keymap('n','<leader>Y','gg"+yG', {noremap = true})
+
+
 -- scroll horizontally
 vim.api.nvim_set_keymap('','<leader>l','20zl', {})
 vim.api.nvim_set_keymap('','<leader>h','20zh', {})
@@ -178,10 +187,23 @@ vim.api.nvim_command('autocmd TextYankPost [[* silent! lua vim.highlight.on_yank
 vim.api.nvim_command("augroup END")
 
 -- treesitter
+vim.api.nvim_command('set foldmethod=expr')
+vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
 require('nvim-treesitter.configs').setup {
   -- ensure_installed = "maintained",   -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
     enable = true,
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
   },
 }
 
@@ -333,6 +355,34 @@ require('bufferline').setup {
 
 -- far
 vim.g['far#source'] = 'rg'
+-- gitsigns
+require('gitsigns').setup {
+  signs = {
+    add = {hl = 'GitGutterAdd', text = '▋'},
+    change = {hl = 'GitGutterChange',text= '▋'},
+    delete = {hl= 'GitGutterDelete', text = '▋'},
+    topdelete = {hl ='GitGutterDeleteChange',text = '▔'},
+    changedelete = {hl = 'GitGutterChange', text = '▎'},
+  },
+  keymaps = {
+      -- Default keymap options
+      noremap = true,
+      buffer = true,
+
+      ['n ]g'] = { expr = true, "&diff ? ']g' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'"},
+      ['n [g'] = { expr = true, "&diff ? '[g' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'"},
+
+      ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
+      ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
+      ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
+      ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+      ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
+
+      -- Text objects
+      ['o ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>',
+      ['x ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>'
+    },
+}
 
 -- vista
 vim.g['vista#renderer#enable_icon'] = 1
@@ -347,6 +397,11 @@ vim.g.vista_executive_for = {
   typescript = 'nvim_lsp',
   typescriptreact =  'nvim_lsp',
 }
+
+-- vim-operator-surround
+vim.api.nvim_set_keymap('','sa','<Plug>(operator-surround-append)', {silent = true})
+vim.api.nvim_set_keymap('','sd','<Plug>(operator-surround-delete)', {silent = true})
+vim.api.nvim_set_keymap('','sr','<Plug>(operator-surround-replace)', {silent = true})
 
 -- packer
 return require('packer').startup(function(use)
@@ -368,6 +423,14 @@ return require('packer').startup(function(use)
   use 'brooth/far.vim'
   use 'liuchengxu/vista.vim'
   use {
+    'rhysd/vim-operator-surround',
+    requires = {'kana/vim-operator-user'}
+  }
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = {'nvim-lua/plenary.nvim'}
+  }
+  use {
     'akinsho/nvim-bufferline.lua',
     requires = {'kyazdani42/nvim-web-devicons'}
   }
@@ -380,6 +443,7 @@ return require('packer').startup(function(use)
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
   }
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use { 'nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter'}
   use {
     'glepnir/galaxyline.nvim', branch = 'main', config = function() require('statusline') end,
     requires = {'kyazdani42/nvim-web-devicons', opt = true}
