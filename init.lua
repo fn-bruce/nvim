@@ -3,43 +3,76 @@ require('eviline')
 -- require('spaceline')
 
 -- options
-vim.o.termguicolors = true
-vim.o.splitright = true
-vim.o.splitbelow = true
-vim.o.hidden = true
-vim.o.magic = true
-vim.o.backup = false
-vim.o.writebackup = false
-vim.o.mouse = "nv"
-vim.o.completeopt = "menuone,noinsert,noselect"
-vim.o.showbreak = "↳  "
-vim.o.fileformats = "unix,mac,dos"
-vim.o.encoding = "utf-8"
-vim.o.wildignorecase = true
-vim.o.wildignore = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
-vim.o.directory = os.getenv("HOME").."/.cache/nvim/swag/"
-vim.o.undodir = os.getenv("HOME").."/.cache/nvim/undo/"
-vim.o.backupdir = os.getenv("HOME").."/.cache/nvim/backup/"
-vim.o.viewdir = os.getenv("HOME").."/.cache/nvim/view/"
-vim.o.spellfile = os.getenv("HOME").."/.cache/nvim/spell/en.uft-8.add"
-vim.o.history = 2000
-vim.o.smarttab = true
+local cache_dir = os.getenv("HOME").."/.cache/nvim/"
+local completeopt = table.concat({
+  "menuone",
+  "noinsert",
+  "noselect",
+}, ",")
+local wildignore = table.concat({
+  "**/bower_modules/**",
+  "**/node_modules/**",
+  "**/tmp/**",
+  "*.DS_Store",
+  "*.gif",
+  "*.jpeg",
+  "*.jpg",
+  "*.o",
+  "*.out",
+  "*.png",
+  "*.pyc",
+  "*.zip",
+  ".git",
+  ".hg",
+  ".svn",
+}, ",")
+local fileformats = table.concat({
+  "unix",
+  "mac",
+  "dos",
+}, ",")
 
-vim.cmd("set relativenumber")
-vim.cmd("set number")
-vim.cmd("set synmaxcol=2500")
-vim.cmd("set textwidth=80")
-vim.cmd("set expandtab")
-vim.cmd("set autoindent")
-vim.cmd("set tabstop=2")
-vim.cmd("set shiftwidth=2")
-vim.cmd("set softtabstop=-1")
-vim.cmd("set wrap")
-vim.cmd("set colorcolumn=80")
-vim.cmd("set signcolumn=yes")
-vim.cmd("set undofile")
-vim.cmd("set noswapfile")
-vim.cmd("set shortmess+=c")
+-- regular options
+vim.o.termguicolors  = true  -- enable 24-bit rgb color
+vim.o.splitright     = true  -- split window on right
+vim.o.splitbelow     = true  -- split window on bottom
+vim.o.hidden         = true  -- hide buffer when abandoned
+vim.o.magic          = true  -- a different way to search
+vim.o.backup         = false  -- don't create a file backup
+vim.o.writebackup    = false  -- don't make backup before overwriting a file
+vim.o.mouse          = "nv"  -- enables mouse support
+vim.o.completeopt    = completeopt  -- insert mode completion options
+vim.o.showbreak      = "↳  "  -- string to put at start of wrapped lines
+vim.o.fileformats    = fileformats  -- gives end-of-line formats
+vim.o.encoding       = "utf-8"  -- string-encoding used for RPC communication
+vim.o.wildignorecase = true  -- ignore case when completing file names and directories
+vim.o.wildignore     = wildignore  -- files ignored when completing
+vim.o.directory      = cache_dir.."swag/"
+vim.o.undodir        = cache_dir.."undo/"
+vim.o.backupdir      = cache_dir.."backup/"
+vim.o.viewdir        = cache_dir.."view/"
+vim.o.spellfile      = cache_dir.."spell/en.uft-8.add"
+vim.o.history        = 2000  -- command-line history length
+vim.o.smarttab       = true
+vim.o.shortmess      = vim.o.shortmess.."c"  -- don't give ins_cmpletion-menu messages
+
+-- window-scoped options
+vim.wo.relativenumber = true  -- show line number relative to line w/ cursor
+vim.wo.number         = true  -- show side line numbers
+vim.wo.colorcolumn    = "80"  -- color column
+vim.wo.signcolumn     = "yes"  -- adds that extra side column for symbols
+vim.wo.wrap           = true  -- wrap text
+
+-- buffer-scoped options
+vim.bo.synmaxcol   = 2500
+vim.bo.textwidth   = 80
+vim.bo.expandtab   = true
+vim.bo.autoindent  = true
+vim.bo.tabstop     = 2
+vim.bo.shiftwidth  = 2
+vim.bo.softtabstop = -1
+vim.bo.undofile    = true
+vim.bo.swapfile    = false
 
 -- variables
 vim.g.mapleader = " "
@@ -197,36 +230,27 @@ vim.g.db_ui_winwidth = 35
 vim.g.db_ui_save_location = os.getenv("HOME") .. '/.cache/vim/db_ui_queries'
 vim.api.nvim_set_keymap('n','<leader>od',':DBUIToggle<CR>', {noremap = true, silent = true})
 
--- cursorword
-vim.api.nvim_command('augroup user_plugin_cursorword')
-vim.api.nvim_command('autocmd!')
-vim.api.nvim_command('autocmd FileType NvimTree,lspsagafinder,dashboard,vista let b:cursorword = 0')
-vim.api.nvim_command('autocmd WinEnter * if &diff || &pvw | let b:cursorword = 0 | endif')
-vim.api.nvim_command('autocmd InsertEnter * let b:cursorword = 0')
-vim.api.nvim_command('autocmd InsertLeave * let b:cursorword = 1')
-vim.api.nvim_command('augroup END')
-
 -- accelerated-jk
 vim.api.nvim_command('nmap j <Plug>(accelerated_jk_gj)')
 vim.api.nvim_command('nmap k <Plug>(accelerated_jk_gk)')
 
 -- vim-eft
-vim.api.nvim_set_keymap('n',';','<Plug>(eft-repeat)', {})
-vim.api.nvim_set_keymap('x',';','<Plug>(eft-repeat)', {})
-
-vim.api.nvim_set_keymap('n','f','<Plug>(eft-f)', {})
-vim.api.nvim_set_keymap('x','f','<Plug>(eft-f)', {})
-vim.api.nvim_set_keymap('o','f','<Plug>(eft-f)', {})
-vim.api.nvim_set_keymap('n','F','<Plug>(eft-F)', {})
-vim.api.nvim_set_keymap('x','F','<Plug>(eft-F)', {})
-vim.api.nvim_set_keymap('o','F','<Plug>(eft-F)', {})
-
-vim.api.nvim_set_keymap('n','t','<Plug>(eft-t)', {})
-vim.api.nvim_set_keymap('x','t','<Plug>(eft-t)', {})
-vim.api.nvim_set_keymap('o','t','<Plug>(eft-t)', {})
-vim.api.nvim_set_keymap('n','T','<Plug>(eft-T)', {})
-vim.api.nvim_set_keymap('x','T','<Plug>(eft-T)', {})
-vim.api.nvim_set_keymap('o','T','<Plug>(eft-T)', {})
+-- vim.api.nvim_set_keymap('n',';','<Plug>(eft-repeat)', {})
+-- vim.api.nvim_set_keymap('x',';','<Plug>(eft-repeat)', {})
+--
+-- vim.api.nvim_set_keymap('n','f','<Plug>(eft-f)', {})
+-- vim.api.nvim_set_keymap('x','f','<Plug>(eft-f)', {})
+-- vim.api.nvim_set_keymap('o','f','<Plug>(eft-f)', {})
+-- vim.api.nvim_set_keymap('n','F','<Plug>(eft-F)', {})
+-- vim.api.nvim_set_keymap('x','F','<Plug>(eft-F)', {})
+-- vim.api.nvim_set_keymap('o','F','<Plug>(eft-F)', {})
+--
+-- vim.api.nvim_set_keymap('n','t','<Plug>(eft-t)', {})
+-- vim.api.nvim_set_keymap('x','t','<Plug>(eft-t)', {})
+-- vim.api.nvim_set_keymap('o','t','<Plug>(eft-t)', {})
+-- vim.api.nvim_set_keymap('n','T','<Plug>(eft-T)', {})
+-- vim.api.nvim_set_keymap('x','T','<Plug>(eft-T)', {})
+-- vim.api.nvim_set_keymap('o','T','<Plug>(eft-T)', {})
 
 -- packer
 return require('packer').startup(function(use)
@@ -241,7 +265,6 @@ return require('packer').startup(function(use)
   use 'kristijanhusak/vim-dadbod-ui'
   use 'tpope/vim-dadbod'
   use 'norcalli/nvim-colorizer.lua'
-  -- use 'itchyny/vim-cursorword'
   use 'Raimondi/delimitMate'
   use 'rhysd/accelerated-jk'
   use 'hrsh7th/vim-eft'
