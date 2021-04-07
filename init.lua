@@ -15,9 +15,10 @@ vim.g.completion_chain_complete_list = {
   {complete_items = {"lsp", "snippet", "path"}},
 }
 
-require('options')  -- vim options
 require('mappings')
 require('plugins.settings')
+require('options')  -- vim options
+require('auto')
 
 -- packer
 return require('packer').startup(function(use)
@@ -40,6 +41,9 @@ return require('packer').startup(function(use)
   use 'liuchengxu/vista.vim'
   use 'tpope/vim-surround'
   use 'kdheepak/lazygit.nvim'
+  use 'tpope/vim-commentary'
+  use 'mxw/vim-jsx'
+  use 'alvan/vim-closetag'
   use {
     'lewis6991/gitsigns.nvim',
     requires = {'nvim-lua/plenary.nvim'}

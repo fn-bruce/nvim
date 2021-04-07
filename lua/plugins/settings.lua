@@ -231,6 +231,7 @@ require('gitsigns').setup {
 }
 
 -- vista
+vim.api.nvim_set_keymap('n','<Leader>v',':Vista<CR>', {noremap = true, silent = true})
 vim.g['vista#renderer#enable_icon'] = 1
 vim.g.vista_disable_statusline = 1
 vim.g.vista_default_executive = 'ctags'
@@ -255,3 +256,6 @@ vim.api.nvim_set_keymap('n','<Leader>fw',':Telescope grep_string<CR>', {noremap 
 vim.api.nvim_set_keymap('n','<Leader>fh',':DashboardFindHistory<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n','<Leader>fc',':Telescope git_commits<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n','<Leader>ft',':Telescope help_tags<CR>', {noremap = true, silent = true})
+
+-- closetag
+vim.g.closetag_filenames = '*.html,*.js'
