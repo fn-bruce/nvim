@@ -173,26 +173,20 @@ vim.g.dashboard_footer_icon = '🐬 '
 vim.g.dashboard_default_executive = 'telescope'
 vim.g.dashboard_custom_section = {
   last_session = {
-    description = {'  Last session                            SPC s l'},
+    description = {'  Last Session                            SPC s l'},
     command =  'SessionLoad'},
   find_history = {
-    description = {'  Recently opened files                   SPC f h'},
+    description = {'  Recently Opened Files                   SPC f h'},
     command =  'DashboardFindHistory'},
   find_file  = {
-    description = {'  Find  File                              SPC f f'},
+    description = {'  Find File                               SPC f f'},
     command = 'Telescope find_files find_command=rg,--hidden,--files,--glob,!.git'},
   new_file = {
     description = {'  File Browser                            SPC f b'},
     command =  'Telescope file_browser'},
   find_word = {
-    description = {'  Find  word                              SPC f w'},
+    description = {'  Find Word                               SPC f w'},
     command = 'DashboardFindWord'},
-  find_dotfiles = {
-    description = {'  Open Personal dotfiles                  SPC f d'},
-    command = 'Telescope dotfiles path=' .. '~/.dotfiles'},
-  go_source = {
-    description = {'  Find Go Source Code                     SPC f s'},
-    command = 'Telescope gosource'},
 }
 
 -- bufferline
@@ -254,10 +248,10 @@ vim.g.vista_executive_for = {
 vim.api.nvim_set_keymap('n','<Leader>bb',':Telescope buffers<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n','<Leader>fa',':DashboardFindWord<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n','<Leader>fb',':Telescope file_browser<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n','<Leader>ff',':DashboardFindFile<CR>', {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n','<Leader>ff',':DashboardFindFile<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>ff',':Telescope find_files find_command=rg,--hidden,--files,--glob,!.git<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n','<Leader>fg',':Telescope git_files<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n','<Leader>fw',':Telescope grep_string<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n','<Leader>fh',':DashboardFindHistory<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n','<Leader>fl',':Telescope loclist<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n','<Leader>fc',':Telescope git_commits<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n','<Leader>ft',':Telescope help_tags<CR>', {noremap = true, silent = true})
