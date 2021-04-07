@@ -1,7 +1,6 @@
 require('zephyr')  -- theme
 require('eviline')  -- galaxyline settings
-require('options')  -- vim options
-require('mappings')
+require('theme')
 
 -- variables
 vim.g.mapleader = " "
@@ -16,6 +15,8 @@ vim.g.completion_chain_complete_list = {
   {complete_items = {"lsp", "snippet", "path"}},
 }
 
+require('options')  -- vim options
+require('mappings')
 require('plugins.settings')
 
 -- packer
@@ -37,10 +38,8 @@ return require('packer').startup(function(use)
   use 'glepnir/indent-guides.nvim'
   use 'brooth/far.vim'
   use 'liuchengxu/vista.vim'
-  use {
-    'rhysd/vim-operator-surround',
-    requires = {'kana/vim-operator-user'}
-  }
+  use 'tpope/vim-surround'
+  use 'kdheepak/lazygit.nvim'
   use {
     'lewis6991/gitsigns.nvim',
     requires = {'nvim-lua/plenary.nvim'}

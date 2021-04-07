@@ -5,8 +5,11 @@ vim.api.nvim_command("imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-ju
 vim.api.nvim_command("smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'")
 
 -- auto save and load views
--- vim.api.nvim_command('autocmd BufWinLeave *.* mkview')
--- vim.api.nvim_command('autocmd BufWinEnter *.* silent loadview')
+vim.api.nvim_command('augroup AutoSaveGroup')
+vim.api.nvim_command('  autocmd!')
+vim.api.nvim_command('  autocmd BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!')
+vim.api.nvim_command('  autocmd BufWinEnter ?* silent! loadview')
+vim.api.nvim_command('augroup end')
 
 -- equalize win dim when resizing vim win
 vim.api.nvim_command("augroup yank")
@@ -129,6 +132,7 @@ vim.api.nvim_command("nnoremap <silent> ]e <cmd>lua require'lspsaga.diagnostic'.
 -- float terminal
 vim.api.nvim_command("nnoremap <silent> <A-d> <cmd>lua require('lspsaga.floaterm').open_float_terminal()<CR>")
 vim.api.nvim_command("tnoremap <silent> <A-d> <C-\\><C-n>:lua require('lspsaga.floaterm').close_float_terminal()<CR>")
+vim.api.nvim_set_keymap('n','<Leader>g',':Lspsaga open_floaterm lazygit<CR>', {noremap = true, silent = true})
 
 -- nvim-tree
 vim.g.nvim_tree_follow = 1
@@ -169,14 +173,14 @@ vim.g.dashboard_footer_icon = '🐬 '
 vim.g.dashboard_default_executive = 'telescope'
 vim.g.dashboard_custom_section = {
   last_session = {
-    description = {'  Recently laset session                  SPC s l'},
+    description = {'  Last session                            SPC s l'},
     command =  'SessionLoad'},
   find_history = {
     description = {'  Recently opened files                   SPC f h'},
     command =  'DashboardFindHistory'},
   find_file  = {
     description = {'  Find  File                              SPC f f'},
-    command = 'Telescope find_files find_command=rg,--hidden,--files'},
+    command = 'Telescope find_files find_command=rg,--hidden,--files,--glob,!.git'},
   new_file = {
     description = {'  File Browser                            SPC f b'},
     command =  'Telescope file_browser'},
@@ -246,7 +250,14 @@ vim.g.vista_executive_for = {
   typescriptreact =  'nvim_lsp',
 }
 
--- vim-operator-surround
-vim.api.nvim_set_keymap('','sa','<Plug>(operator-surround-append)', {silent = true})
-vim.api.nvim_set_keymap('','sd','<Plug>(operator-surround-delete)', {silent = true})
-vim.api.nvim_set_keymap('','sr','<Plug>(operator-surround-replace)', {silent = true})
+-- telescope
+vim.api.nvim_set_keymap('n','<Leader>bb',':Telescope buffers<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>fa',':DashboardFindWord<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>fb',':Telescope file_browser<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>ff',':DashboardFindFile<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>fg',':Telescope git_files<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>fw',':Telescope grep_string<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>fh',':DashboardFindHistory<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>fl',':Telescope loclist<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>fc',':Telescope git_commits<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>ft',':Telescope help_tags<CR>', {noremap = true, silent = true})
