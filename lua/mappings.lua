@@ -30,3 +30,7 @@ vim.api.nvim_set_keymap('i','<C-s>','<Esc>:w<CR>', {noremap = true})
 -- quit
 vim.api.nvim_set_keymap('n','<C-q>',':wq<CR>', {noremap = true})
 vim.api.nvim_set_keymap('i','<C-q>','<Esc>:wq<CR>', {noremap = true})
+
+-- session
+vim.api.nvim_set_keymap('n','<Leader>ss',':SessionSave<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n','<Leader>sl',':SessionLoad<CR>', {noremap = true})
