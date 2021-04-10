@@ -18,8 +18,8 @@ vim.api.nvim_command('autocmd TextYankPost [[* silent! lua vim.highlight.on_yank
 vim.api.nvim_command("augroup END")
 
 -- treesitter
-vim.api.nvim_command('set foldmethod=expr')
-vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
+-- vim.o.foldmethod = "expr"
+-- vim.o.foldexpr   = "nvim_treesitter#foldexpr()"
 require('nvim-treesitter.configs').setup {
   -- ensure_installed = "maintained",   -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
@@ -259,3 +259,34 @@ vim.api.nvim_set_keymap('n','<Leader>ft',':Telescope help_tags<CR>', {noremap = 
 
 -- closetag
 vim.g.closetag_filenames = '*.html,*.js'
+
+-- luapad
+require('luapad').attach({
+  context = { return_r = function() return 4 end}
+})
+
+-- crease
+vim.api.nvim_exec([[
+set fillchars=fold:\ 
+
+function! CreaseIndent() abort
+  let fs = nextnonblank(v:foldstart)
+  let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+  let foldLevelStr = repeat(' ', match(line,'\S'))
+  return foldLevelStr
+endfunction
+
+function! FoldTxt() abort
+  return trim(substitute(getline(v:foldstart),'\V\C'.join(split(&commentstring, '%s'), '\|') . '\|'.join(split(&foldmarker, ','), '\d\?\|') . '\|'.join(g:foldtext_stop_words, '\|') . '\|','','g'))
+endfunction
+
+let g:foldtext_stop_words = ['\^function','!','abort']
+
+let g:crease_foldtext = { 'default': '%{CreaseIndent()}%{FoldTxt()} %= %l lines %f%f%f%f' }
+]], true)
+
+-- delimitmate
+vim.g.delimitMate_excluded_regions = "Comment,String"
+
+-- matchup
+vim.g.loaded_matchit = 1

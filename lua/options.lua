@@ -79,7 +79,7 @@ vim.o.showmode        = false  -- hides the word for the mode (bottom left)
 vim.o.shortmess       = "aoOTIcF"  -- don't give ins_cmpletion-menu messages
 vim.o.scrolloff       = 2
 vim.o.sidescrolloff   = 5
-vim.o.foldlevelstart  = 99
+vim.o.foldlevelstart  = 0
 vim.o.ruler           = false
 vim.o.listchars       = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←"
 vim.o.showtabline     = 2
@@ -98,6 +98,7 @@ vim.o.display         = "lastline"
 vim.o.pumblend        = 10  -- makes pop-up menu transparent
 vim.o.winblend        = 10  -- makes pop-up windows transparent
 
+
 -- window-scoped options
 vim.wo.relativenumber = true  -- show line number relative to line w/ cursor
 vim.wo.number         = true  -- show side line numbers
@@ -107,6 +108,8 @@ vim.wo.wrap           = false  -- wrap text
 vim.wo.list           = true
 vim.wo.breakindentopt = "shift:2,min:20"
 vim.wo.linebreak      = true
+vim.wo.foldmethod     = "marker"
+vim.wo.foldcolumn     = "0"
 
 -- buffer-scoped options
 vim.bo.undofile    = true

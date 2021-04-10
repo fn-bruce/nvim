@@ -44,6 +44,10 @@ return require('packer').startup(function(use)
   use 'tpope/vim-commentary'
   use 'mxw/vim-jsx'
   use 'alvan/vim-closetag'
+  use 'rafcamlet/nvim-luapad'
+  use 'scr1pt0r/crease.vim'
+  use 'tpope/vim-repeat'
+  use 'andymass/vim-matchup'
   use {
     'lewis6991/gitsigns.nvim',
     requires = {'nvim-lua/plenary.nvim'}
