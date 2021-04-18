@@ -36,6 +36,7 @@ return require('packer').startup(function(use)
     requires = {'nvim-lua/plenary.nvim'}
   }
   use 'kdheepak/lazygit.nvim'  -- fancy git ui
+	use 'tpope/vim-fugitive'
 
 	-- TOOLS
   use {
@@ -61,4 +62,9 @@ return require('packer').startup(function(use)
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
   use 'rafamadriz/friendly-snippets'
+
+	-- React
+	-- use 'chemzqm/vim-jsx-improve'
+	-- use 'MaxMEllon/vim-jsx-pretty'
+	use 'mxw/vim-jsx'
 end)
