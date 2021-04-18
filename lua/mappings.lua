@@ -1,3 +1,8 @@
+-- Leader key
+vim.g.mapleader = " "
+vim.api.nvim_set_keymap('n',' ','', {noremap = true})
+vim.api.nvim_set_keymap('x',' ','', {noremap = true})
+
 -- replace curr selected txt with default register w/o yanking it
 vim.api.nvim_set_keymap('v','<leader>p','_dP', {noremap = true})
 
@@ -34,3 +39,7 @@ vim.api.nvim_set_keymap('i','<C-q>','<Esc>:wq<CR>', {noremap = true})
 -- session
 vim.api.nvim_set_keymap('n','<Leader>ss',':SessionSave<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n','<Leader>sl',':SessionLoad<CR>', {noremap = true})
+
+-- python interpreter
+vim.g.python_host_prog = '/usr/bin/python'
+vim.g.python3_host_prog = '/usr/local/bin/python3'

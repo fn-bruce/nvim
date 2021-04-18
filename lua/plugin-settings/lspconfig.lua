@@ -1,3 +1,10 @@
+vim.g.completion_enable_snippet = "vim-vsnip"
+vim.g.completion_trigger_on_delete = 1
+vim.g.completion_matching_strategy_list = {"exact", "substring", "fuzzy"}
+vim.g.completion_chain_complete_list = {
+  {complete_items = {"lsp", "snippet", "path"}},
+}
+
 -- lspconfig
 local lspconfig = require('lspconfig')
 local completion = require('completion').on_attach
