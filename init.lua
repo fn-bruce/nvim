@@ -1,5 +1,4 @@
 require('zephyr')  -- theme
-require('eviline')  -- galaxyline settings
 require('theme')
 
 -- variables
@@ -16,8 +15,8 @@ vim.g.completion_chain_complete_list = {
 }
 
 require('mappings')
-require('plugins.settings')
-require('options')  -- vim options
+require('plugin-settings')
+require('options')
 require('auto')
 
 -- packer
@@ -30,24 +29,18 @@ return require('packer').startup(function(use)
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
   use 'glepnir/lspsaga.nvim'
-  use 'kristijanhusak/vim-dadbod-ui'
-  use 'tpope/vim-dadbod'
   use 'norcalli/nvim-colorizer.lua'
   use 'Raimondi/delimitMate'
   use 'rhysd/accelerated-jk'
   use 'glepnir/dashboard-nvim'
   use 'glepnir/indent-guides.nvim'
   use 'brooth/far.vim'
-  use 'liuchengxu/vista.vim'
   use 'tpope/vim-surround'
   use 'kdheepak/lazygit.nvim'
   use 'tpope/vim-commentary'
-  use 'mxw/vim-jsx'
   use 'alvan/vim-closetag'
-  use 'rafcamlet/nvim-luapad'
   use 'scr1pt0r/crease.vim'
   use 'tpope/vim-repeat'
-  use 'andymass/vim-matchup'
   use {
     'lewis6991/gitsigns.nvim',
     requires = {'nvim-lua/plenary.nvim'}
@@ -58,6 +51,7 @@ return require('packer').startup(function(use)
   }
   use {
     'kyazdani42/nvim-tree.lua',
+    commit = 'ed23e1df1c654657a38003a2cb010003d6fc4dc9',
     requires = {'kyazdani42/nvim-web-devicons'}
   }
   use {

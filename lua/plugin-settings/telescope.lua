@@ -1,0 +1,11 @@
+-- telescope
+vim.api.nvim_set_keymap('n','<Leader>bb',':Telescope buffers<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>fa',':DashboardFindWord<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>fb',':Telescope file_browser<CR>', {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n','<Leader>ff',':DashboardFindFile<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>ff',':Telescope find_files find_command=rg,--hidden,--files,--glob,!.git<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>fg',':Telescope git_files<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>fw',':Telescope grep_string<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>fh',':DashboardFindHistory<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>fc',':Telescope git_commits<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n','<Leader>ft',':Telescope help_tags<CR>', {noremap = true, silent = true})
