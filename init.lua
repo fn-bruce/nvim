@@ -1,6 +1,6 @@
 require('plugins')
 require('theme')
-require('options')
 require('auto')
 require('mappings')
 require('plugin-settings')
+require('options')
